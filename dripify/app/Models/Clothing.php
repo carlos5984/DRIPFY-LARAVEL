@@ -2,19 +2,18 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class Clothing extends Model
+
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, HasUuids;
+    use Notifiable, HasUuids;
 
     /**
      * The attributes that are mass assignable.
@@ -22,20 +21,21 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'id',
+        'user_id',
+        'clothing_name',
+        'clothing_path',
+        'clothing_description',
+        'available',
+        'clothing_path',
     ];
 
+    protected $hidden = [
+        'user_id', // hide the raw foreign key
+    ];
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
 
 
     /**
@@ -46,13 +46,19 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-
+            'available' => 'boolean',
         ];
     }
 
-    public function clothes(): HasMany {
-        return $this->hasMany(Clothing::class);
+    public function getClothingUrlAttribute(): string
+    {
+        return url("storage/images/{$this->clothing_path}");
+    }
+
+    public function user(): BelongsTo{
+        return $this->belongsTo(User::class);
     }
 }
+
+
+
