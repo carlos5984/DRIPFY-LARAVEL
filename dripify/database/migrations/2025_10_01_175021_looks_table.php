@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('looks', function (Blueprint $table) {
             $table->uuid('look_id');
             $table->uuid('clothing_id');
-            $table->uuid('user_id');
+            $table->uuid('user_id' );
             $table->string('tag', 255)->nullable();
 
             $table->primary(['look_id', 'clothing_id']);

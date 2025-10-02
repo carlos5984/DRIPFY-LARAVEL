@@ -20,8 +20,9 @@ Route::get('/register', function () {
     return view('register');
 })->name('register');
 
-Route::view('/dashboard', 'dashboard')->name('dashboard');
-
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware('auth')->name('dashboard');  
 
 Route::post('/logout', function(){
     Auth::guard('web')->logout();

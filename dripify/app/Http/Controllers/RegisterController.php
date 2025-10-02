@@ -19,7 +19,7 @@ class RegisterController extends Controller
         ]);
 
         $user = User::create($userData);
-
+        
         Auth::Login($user);
         return redirect()->route('dashboard');
     }
