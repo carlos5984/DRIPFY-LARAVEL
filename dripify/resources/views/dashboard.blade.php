@@ -1,11 +1,34 @@
-
 <x-layout>
     @auth
-        <h1>Welcome {{ Auth::user()->name }}</h1>
-        <form method="post" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit">Logout</button>
-        </form>
-    @endauth
+        <div style="text-align:center; margin-top:50px;">
+            <h1>Welcome, {{ Auth::user()->name }}</h1>
 
+            <!-- Logout -->
+            <form method="POST" action="{{ route('logout') }}" style="margin-bottom:20px;">
+                @csrf
+                <button type="submit">Logout</button>
+            </form>
+
+            <!-- Botões de ações -->
+            <div style="display:flex; flex-direction:column; gap:10px; max-width:200px; margin:auto;">
+                <a href="{{ route('clothing.formAdd') }}">
+                    <button type="button">Add Clothing</button>
+                </a>
+
+                <a href="{{ route('look.formAdd') }}">
+                    <button type="button">Add Look</button>
+                </a>
+
+                <a href="{{ route('clothing.list') }}">
+                    <button type="button">View My Clothing</button>
+                </a>
+
+                <a href="{{ route('look.list') }}">
+                    <button type="button">View My Looks</button>
+                </a>
+            </div>
+        </div>
+    @else
+        <p>Please <a href="{{ route('login') }}">login</a> to access the dashboard.</p>
+    @endauth
 </x-layout>
