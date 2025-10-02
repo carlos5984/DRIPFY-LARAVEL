@@ -40,12 +40,14 @@ Route::view('/register', 'register')->name('register');
 
 Route::post('/register' , RegisterController::class)->name('register.store');
 
-Route::prefix('clothing')->middleware('auth')->group(function () {
-    Route::get('/add', [ClothingController::class, 'formAddRoupa'])->name('clothing.formAdd'); // Form
-    Route::post('/add', [ClothingController::class, 'addRoupa'])->name('clothing.add'); // Submit
-    Route::get('/list', [ClothingController::class, 'listroupas'])->name('clothing.list'); // List clothes
-    Route::post('/delete', [ClothingController::class, 'deleteroupa'])->name('clothing.delete'); // Delete clothing
-    Route::post('/toggle-available', [ClothingController::class, 'alterarAvailable'])->name('clothing.toggleAvailable'); // Toggle available
+
+// Prefixo opcional "clothing"
+Route::middleware('auth')->prefix('clothing')->group(function () {
+    // Formulário para criar roupa
+    Route::get('/create', [ClothingController::class, 'create'])->name('clothing.create');
+
+    // Rota para salvar roupa
+    Route::post('/', [ClothingController::class, 'store'])->name('clothing.store');
 });
 
 // ----------------------

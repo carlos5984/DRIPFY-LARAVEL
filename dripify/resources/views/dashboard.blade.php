@@ -11,20 +11,10 @@
 
             <!-- Botões de ações -->
             <div style="display:flex; flex-direction:column; gap:10px; max-width:200px; margin:auto;">
-                <a href="{{ route('clothing.formAdd') }}">
+                <a href="{{ route('clothing.create') }}">
                     <button type="button">Add Clothing</button>
                 </a>
 
-                <a href="{{ route('look.formAdd') }}">
-                    <button type="button">Add Look</button>
-                </a>
-
-                <a href="{{ route('clothing.list') }}">
-                    <button type="button">View My Clothing</button>
-                </a>
-
-                <a href="{{ route('look.list') }}">
-                    <button type="button">View My Looks</button>
                 </a>
             </div>
         </div>
