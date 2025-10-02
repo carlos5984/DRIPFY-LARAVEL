@@ -30,9 +30,7 @@ class Clothing extends Model
         'clothing_path',
     ];
 
-    protected $hidden = [
-        'user_id', // hide the raw foreign key
-    ];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -57,6 +55,10 @@ class Clothing extends Model
 
     public function user(): BelongsTo{
         return $this->belongsTo(User::class);
+    }
+
+    public function look(): BelongsTo{
+        return $this->belongsTo(Look::class);
     }
 }
 
