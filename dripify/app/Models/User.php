@@ -55,4 +55,8 @@ class User extends Authenticatable
     public function clothes(): HasMany {
         return $this->hasMany(Clothing::class);
     }
+
+    public function looks(): HasMany {
+        return $this->hasMany(Look::class);
+    }
 }
