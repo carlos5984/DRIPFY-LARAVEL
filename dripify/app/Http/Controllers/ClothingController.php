@@ -60,7 +60,7 @@ class ClothingController extends Controller
             return 'DESCRIPTION NOT GENERATED';
         }
 
-        $data = json_decode($response->json(), true);
+        $data = json_decode( $response->json() , true);
 
 
         return  $data;

@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('looks', function (Blueprint $table) {
+            $table->uuid('id')->primary();
             $table->uuid('look_id');
             $table->uuid('clothing_id');
             $table->uuid('user_id' );
             $table->string('tag', 255)->nullable();
 
-            $table->primary(['look_id', 'clothing_id']);
 
             $table->foreign('user_id')
                 ->references('id')->on('users')
@@ -27,6 +27,7 @@ return new class extends Migration
                 ->references('id')->on('clothing')
                 ->onDelete('cascade');
 
+            $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
         });

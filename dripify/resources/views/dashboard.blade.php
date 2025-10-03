@@ -19,7 +19,11 @@
                     <button type="button">View Clothing</button>
                 </a>
 
+
+                <a href="{{ route('look.formAddLook') }}">
+                    <button type="button">generateLook</button>
                 </a>
+
             </div>
         </div>
     @else

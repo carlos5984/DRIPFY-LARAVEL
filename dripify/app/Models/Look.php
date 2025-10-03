@@ -10,24 +10,32 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Look extends Model
 {
-    use  HasUuids;
 
+    protected $table = 'looks';
     public $incrementing = false;
     protected $keyType = 'string';
-
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
     protected $fillable = [
+        'id',
+        'look_id',
         'user_id',
         'clothing_id',
         'tag',
     ];
 
-    public function user(): BelongsTo
+    public $timestamps = true;
+
+    public function user() : BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function clothing(): HasMany
+    public function clothing() : BelongsTo
     {
-        return $this->hasMany(Clothing::class);
+        return $this->belongsTo(Clothing::class, 'clothing_id');
     }
 }

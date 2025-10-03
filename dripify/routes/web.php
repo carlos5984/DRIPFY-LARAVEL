@@ -54,7 +54,7 @@ Route::middleware('auth')->prefix('clothing')->group(function () {
 // Look Routes
 // ----------------------
 Route::prefix('look')->middleware('auth')->group(function () {
-    Route::get('/add', [LookController::class, 'formAddLook'])->name('look.formAdd'); // Form add look
-    Route::post('/add', [LookController::class, 'addLook'])->name('look.add'); // Submit look
+    Route::view('/add', 'formAddLook')->name('look.formAddLook'); // Form add look
+    Route::post('/add', [LookController::class, 'store'])->name('look.add'); // Submit look
     Route::get('/list', [LookController::class, 'listLooks'])->name('look.list'); // List looks
 });

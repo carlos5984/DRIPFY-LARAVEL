@@ -12,8 +12,8 @@
                 <li>
                     <strong>{{ $clothing->clothing_name }}</strong><br>
                     <p>{{ $clothing->clothing_description }}</p>
-                    <img src="{{ asset('storage/' . $clothing->clothing_path) }}" 
-                         alt="Imagem da roupa" 
+                    <img src="{{ asset('storage/' . $clothing->clothing_path) }}"
+                         alt="Imagem da roupa"
                          style="max-width: 200px; height: auto;">
                 </li>
             @endforeach

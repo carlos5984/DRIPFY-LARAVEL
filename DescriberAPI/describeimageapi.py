@@ -14,7 +14,7 @@ def describeimage(image: str)-> str:
     return googleapi.DescribeImage(f"{image_path}")
 
 
-
+#genlook / id?prompt=texto+pro+prompt
 @app.get("/GenerateLook/{userid}")
 def GenerateLook(userid:str ,prompt:str )-> str:
     
