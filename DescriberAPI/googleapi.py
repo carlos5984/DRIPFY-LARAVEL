@@ -31,11 +31,16 @@ def DescribeImage(path: str, max_size: tuple = (512,512)) -> str:
             data=image_content
         )
 )
-    prompt_parts = ['''{"<name>":{"description":"<detail>"}}
-<name> = most prominent clothing item in the image.
-<detail> = detailed description of it.
-Ignore person/body parts. No extra text.''',
-        image_part
+    prompt_parts = [
+        '''Return a valid JSON object with a single key-value pair.
+    "<name>": { "description": "<detail>" }
+    - <name> = most prominent clothing item in the image
+    - <detail> = detailed description of it
+    - Use proper double quotes for JSON keys and values
+    - Do not add extra text
+    - Enclose the whole output in curly braces { }'''
+    ,
+    image_part
     ]
     
     config=types.GenerateContentConfig(
@@ -80,66 +85,53 @@ def GenerateLooks(userid: str, user_prompt: str) -> str:
 
     
     prompt = [
-     f'''You are a fashion stylist AI. Your task is to create ONE SINGULAR clothing look based on the user’s style request and clothing inventory.
-      Rules:
-      1. Read the "prompt" to understand the requested style.
-      2. Read the "clothing_inventory" array to find matching clothing.
-      3. Each generated look must contain exactly **one item per category**. Categories include (but are not limited to): 
-        - tops (shirts, t-shirts, blouses, hoodies, jackets, coats, sweaters)
-        - bottoms (pants, jeans, skirts, shorts, leggings)
-        - footwear (shoes, sneakers, boots, sandals, heels)
-        - accessories (hats, scarves, gloves, belts, watches, bags)
-      4. Identify the category of each clothing item using both `clothing_name` and `clothing_description`.
-      5. If a category has no matching items for the style, skip it but keep the rest of the look.
-      6. No duplicate categories in a single look (e.g., no look with 2 shirts or 2 pairs of pants).
-      7. Avoid repeating the exact same item in multiple looks unless inventory is very limited.
-      8. Always output **only valid JSON** with no explanations or extra text.
-      8.5. Never Never Never include clothing items that are marked as `avaiable = 0` in the output,in case the user asked for a not available item,replace it with a similar one.
-      9. The JSON must be structured as:
-      {{
-        "look1": ["clothing_id1", "clothing_id2", ...],
-        "look2": ["clothing_id3", "clothing_id4", ...]
-      }}
-      10. Use `id` from each clothing object, not `clothing_name` or `clothing_path`.
+    f'''You are a fashion stylist AI. Your task is to create ONE singular clothing look based on the user's style request and clothing inventory.
 
-      Input example:
-      {{
-        "prompt": "i wanna go goth today",
-        "clothing_inventory": [
-          {{
-            "id": "uuid1",
-            "clothing_name": "black hoodie",
-            "clothing_description": "Oversized black cotton hoodie"
-            "avaiable": 1
-          }},
-          {{
-            "id": "uuid2",
-            "clothing_name": "black jeans",
-            "clothing_description": "Slim fit black denim jeans"
-            "avaiable": 1
-          }},
-          {{
-            "id": "uuid3",
-            "clothing_name": "combat boots",
-            "clothing_description": "Black leather lace-up combat boots"
-            "avaiable": 1
-          }}
-        ]
-      }}
+    Rules:
+    1. Read the "prompt" to understand the requested style.
+    2. Read the "clothing_inventory" array to find matching clothing.
+    3. Each look must contain exactly one item per category:
+       - tops, bottoms, footwear, accessories
+    4. Identify the category of each clothing item using both `clothing_name` and `clothing_description`.
+    5. Skip any category with no matching items, but include the rest.
+    6. No duplicate categories in a single look.
+    7. Avoid repeating the exact same item in multiple looks unless inventory is very limited.
+    8. Never include items with `available = 0`. Replace unavailable items with similar ones.
+    9. Output **only a single array of clothing IDs** in standard array syntax. For example: ["uuid1","uuid2","uuid3"]. Do **not** include any JSON objects, extra braces, or explanations.
 
-      Expected output example:
-      {{
-        "look1": ["uuid1", "uuid2", "uuid3"]
-      }}
+    Input example:
+    prompt: "I wanna go goth today"
+    clothing_inventory: [
+        {{
+          "id": "uuid1",
+          "clothing_name": "black hoodie",
+          "clothing_description": "Oversized black cotton hoodie",
+          "available": 1
+        }},
+        {{
+          "id": "uuid2",
+          "clothing_name": "black jeans",
+          "clothing_description": "Slim fit black denim jeans",
+          "available": 1
+        }},
+        {{
+          "id": "uuid3",
+          "clothing_name": "combat boots",
+          "clothing_description": "Black leather lace-up combat boots",
+          "available": 1
+        }}
+    ]
 
-      #USER ENTRIES DOWN
+    Expected output example:
+    ["uuid1","uuid2","uuid3"]
 
-      user_clothing : {clothing}
-      user_prompt : {user_prompt}
-      '''
+    # USER INPUT
+    user_clothing: {clothing}
+    user_prompt: {user_prompt}
+    '''
 
     ]
-    
+
     config=types.GenerateContentConfig(
         temperature=0.8,
         top_p=0.95,

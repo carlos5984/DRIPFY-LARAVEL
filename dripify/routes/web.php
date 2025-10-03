@@ -18,13 +18,11 @@ Route::view('/login','login')->name('login');
 Route::post('/login', LoginController::class)->name('login.attempt');
 
 
-Route::get('/register', function () {
-    return view('register');
-})->name('register');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware('auth')->name('dashboard');  
+})->middleware('auth')->name('dashboard');
 
 Route::post('/logout', function(){
     Auth::guard('web')->logout();

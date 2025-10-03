@@ -9,7 +9,7 @@ app = FastAPI()
 def describeimage(image: str)-> str:
     script_dir = Path(__file__).parent
 
-    image_path = script_dir.parent.parent/ 'dripify' / 'public' / 'images' / image
+    image_path = script_dir.parent / 'dripify' / 'storage' / 'app' /'public' / 'images' / image
 
     return googleapi.DescribeImage(f"{image_path}")
 
