@@ -65,4 +65,12 @@ class ClothingController extends Controller
 
         return  $data;
     }
+
+        public function index()
+    {
+        // Pegando só as roupas do usuário logado
+        $clothes = Clothing::where('user_id', Auth::id())->get();
+
+        return view('clothing.index', compact('clothes'));
+    }
 }

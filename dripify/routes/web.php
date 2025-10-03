@@ -46,6 +46,8 @@ Route::middleware('auth')->prefix('clothing')->group(function () {
 
     // Rota para salvar roupa
     Route::post('/', [ClothingController::class, 'store'])->name('clothing.store');
+
+    Route::get('/', [ClothingController::class, 'index'])->name('clothing.index');
 });
 
 // ----------------------

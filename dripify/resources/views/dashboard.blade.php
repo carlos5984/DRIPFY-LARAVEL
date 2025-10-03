@@ -15,6 +15,10 @@
                     <button type="button">Add Clothing</button>
                 </a>
 
+                <a href="{{ route('clothing.index') }}">
+                    <button type="button">View Clothing</button>
+                </a>
+
                 </a>
             </div>
         </div>
