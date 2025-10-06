@@ -4,9 +4,16 @@
 <div class="container">
     <h1>Minhas Roupas</h1>
 
+    <div style="margin-top: 20px;">
+        <a href="{{ route('dashboard') }}">
+            <button type="button">← Voltar ao Início</button>
+        </a>
+    </div>
+    
     @if($clothes->isEmpty())
         <p>Você ainda não cadastrou roupas.</p>
     @else
+
         <ul>
             @foreach($clothes as $clothing)
                 <li>

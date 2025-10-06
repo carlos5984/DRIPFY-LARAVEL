@@ -1,30 +1,51 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1>Add New Clothing</h1>
+<div class="container mt-4">
+    <h1 class="h3 mb-4">Adicionar Nova Roupa</h1>
 
-    <!-- Mostrar mensagem de sucesso -->
+    <!-- Mensagem de sucesso -->
     @if(session('success'))
-        <div>{{ session('success') }}</div>
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
     @endif
 
-    <!-- Formulário -->
-    <form action="{{ route('clothing.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-
-        <div>
-            <label for="clothing_path">Clothing Photo</label>
-            <input type="file" name="clothing_path" id="clothing_path" required>
+    <!-- Mensagem de erro geral -->
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <strong>Erro!</strong> Verifique os campos abaixo.
         </div>
+    @endif
 
-        @error('clothing_path')
-            <div>{{ $message }}</div>
-        @enderror
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form action="{{ route('clothing.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
 
-        <div>
-            <button type="submit">Add Clothing</button>
+                <div class="mb-3">
+                    <label for="clothing_path" class="form-label">Foto da Roupa</label>
+                    <input type="file" name="clothing_path" id="clothing_path" 
+                           class="form-control @error('clothing_path') is-invalid @enderror" 
+                           accept="image/*" required>
+                    @error('clothing_path')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">
+                        Adicionar Roupa
+                    </button>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+        <a href="{{ route('dashboard') }}" class="btn btn-secondary">
+            ← Voltar ao Início
+        </a>
+    </div>
 </div>
 @endsection
