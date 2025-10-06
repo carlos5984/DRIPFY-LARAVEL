@@ -45,16 +45,16 @@ Route::middleware('auth')->prefix('clothing')->group(function () {
     Route::get('/create', [ClothingController::class, 'create'])->name('clothing.create');
 
     // Rota para salvar roupa
-    Route::post('/', [ClothingController::class, 'store'])->name('clothing.store');
+    Route::post('/store', [ClothingController::class, 'store'])->name('clothing.store');
 
-    Route::get('/', [ClothingController::class, 'index'])->name('clothing.index');
+    Route::get('/list', [ClothingController::class, 'index'])->name('clothing.index');
 });
 
 // ----------------------
 // Look Routes
 // ----------------------
 Route::prefix('look')->middleware('auth')->group(function () {
-    Route::view('/add', 'formAddLook')->name('look.formAddLook'); // Form add look
+    Route::view('/add', 'looks/formAddLook')->name('look.formAddLook'); // Form add look
     Route::post('/add', [LookController::class, 'store'])->name('look.add'); // Submit look
-    Route::get('/list', [LookController::class, 'listLooks'])->name('look.list'); // List looks
+    Route::get('/list', [LookController::class,  'index'])->name('look.index'); // List looks
 });

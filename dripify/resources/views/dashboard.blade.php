@@ -21,7 +21,11 @@
 
 
                 <a href="{{ route('look.formAddLook') }}">
-                    <button type="button">generateLook</button>
+                    <button type="button"> generate looks </button>
+                </a>
+
+                <a href="{{ route('look.index') }}">
+                    <button type="button">see looks</button>
                 </a>
 
             </div>

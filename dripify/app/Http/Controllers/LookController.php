@@ -9,6 +9,7 @@ use App\Models\Look;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
@@ -69,5 +70,24 @@ class LookController extends Controller
 
     public function index()
     {
+        $looks =  DB::table('looks')
+            // justa looks c clothing usando o id como referencia
+            ->join('clothing', 'looks.clothing_id', '=', 'clothing.id')
+            //filtra so pros looks do usuario
+            ->where('looks.user_id', Auth::id())
+            //pega os looks e o caminhos pras roupas do look
+            ->select('looks.look_id', 'clothing.clothing_path')
+
+            ->get()
+
+            //agrupa todos os looks usando o id do look
+            ->groupBy('look_id')
+            //transforma num array associativo onde a chave e o look_id e o avlor é um array c os caminhos
+            ->map(function ($items) {
+                return $items->pluck('clothing_path');
+            });
+
+        return view('looks/lookList', compact('looks'));
+        //        return view('clothing.index', compact('clothes'));
     }
 }
