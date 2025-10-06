@@ -9,11 +9,10 @@
             <button type="button">← Voltar ao Início</button>
         </a>
     </div>
-    
+
     @if($clothes->isEmpty())
         <p>Você ainda não cadastrou roupas.</p>
     @else
-
         <ul>
             @foreach($clothes as $clothing)
                 <li>
@@ -21,7 +20,14 @@
                     <p>{{ $clothing->clothing_description }}</p>
                     <img src="{{ asset('storage/' . $clothing->clothing_path) }}"
                          alt="Imagem da roupa"
-                         style="max-width: 200px; height: auto;">
+                         style="max-width: 200px; height: auto;"><br>
+
+                    <!-- Botão para alternar disponibilidade -->
+                    <form action="{{ route('clothing.toggle', $clothing->id) }}" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <button type="submit">Alternar Disponibilidade</button>
+                    </form>
                 </li>
             @endforeach
         </ul>

@@ -48,6 +48,9 @@ Route::middleware('auth')->prefix('clothing')->group(function () {
     Route::post('/store', [ClothingController::class, 'store'])->name('clothing.store');
 
     Route::get('/list', [ClothingController::class, 'index'])->name('clothing.index');
+
+    Route::patch('/clothing/{id}/toggle', [ClothingController::class, 'toggleAvailability'])
+    ->name('clothing.toggle');
 });
 
 // ----------------------
