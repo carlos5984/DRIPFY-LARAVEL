@@ -73,4 +73,14 @@ class ClothingController extends Controller
 
         return view('clothing.index', compact('clothes'));
     }
+
+        public function toggleAvailable(Clothing $clothing)
+        {
+            $clothing->available = !$clothing->available;
+            $clothing->save();
+
+            return back();
+        }
+
+
 }

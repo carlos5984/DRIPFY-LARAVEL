@@ -23,11 +23,15 @@
                          style="max-width: 200px; height: auto;"><br>
 
                     <!-- Botão para alternar disponibilidade -->
-                    <form action="{{ route('clothing.toggle', $clothing->id) }}" method="POST">
+
+                    <form action="{{ route('clothing.toggleAvailable', $clothing->id) }}" method="POST">
                         @csrf
                         @method('PATCH')
-                        <button type="submit">Alternar Disponibilidade</button>
+                        <button type="submit">
+                            {{ $clothing->available ? 'Desativar' : 'Ativar' }}
+                        </button>
                     </form>
+
                 </li>
             @endforeach
         </ul>
