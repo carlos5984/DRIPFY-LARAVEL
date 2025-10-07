@@ -32,6 +32,14 @@
                         </button>
                     </form>
 
+                    <form action="{{ route('clothing.delete', $clothing->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">
+                            {'Deletar'}
+                        </button>
+                    </form>
+
                 </li>
             @endforeach
         </ul>

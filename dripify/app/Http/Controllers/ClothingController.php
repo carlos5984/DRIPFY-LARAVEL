@@ -79,5 +79,13 @@ class ClothingController extends Controller
             return back();
         }
 
+        public function destroy($id)
+        {
+            $clothing = Clothing::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+            $clothing->delete();
+
+            return redirect()->route('clothing.index')->with('success', 'Roupa deletada com sucesso!');
+        }
+
 
 }

@@ -50,6 +50,7 @@ Route::middleware('auth')->prefix('clothing')->group(function () {
     Route::patch('/clothing/{clothing}/toggle-available', [ClothingController::class, 'toggleAvailable'])
     ->name('clothing.toggleAvailable');
 
+    Route::delete('/{id}', [ClothingController::class, 'destroy'])->name('clothing.delete'); 
 });
 
 // ----------------------
