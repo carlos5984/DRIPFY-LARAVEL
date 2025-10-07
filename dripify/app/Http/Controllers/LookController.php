@@ -28,8 +28,18 @@ class LookController extends Controller
         // Upload da imagem
         $prompt = $request->lookPrompt;
 
+
         // Obter descrição da IA
         $looks = $this->generateLookWithAI($prompt);
+
+        switch($looks[0]){
+            case "connection error":
+                return redirect()->route('look.formAddLook')->with('error', 'API currently unavailable, please try again later.');
+            case "api error":
+                return redirect()->route('look.formAddLook')->with('error', 'Something went wrong, please try again later.');
+            default:
+                break;
+        }
 
         $look_id = Str::uuid()->toString();
 
@@ -45,7 +55,7 @@ class LookController extends Controller
         }
 
 
-        return redirect()->route('look.formAddLook')->with('success', 'Roupa adicionada com sucesso!');
+        return redirect()->route('look.formAddLook')->with('success', 'Look gerado com sucesso!');
     }
 
     // Função privada para pegar descrição da IA
@@ -55,11 +65,11 @@ class LookController extends Controller
         try {
             $response = Http::get($url);
         } catch (ConnectionException $e) {
-            return "CONNECTION FAILED \n " . $e->getMessage();
+            return ['connection error', $e->getMessage()];
         }
 
         if (!$response->successful()) {
-            return 'DESCRIPTION NOT GENERATED';
+            return ['api error', $response->getStatusCode()];
         }
 
         $data = json_decode( $response->json() , true);
@@ -89,5 +99,12 @@ class LookController extends Controller
 
         return view('looks/lookList', compact('looks'));
         //        return view('clothing.index', compact('clothes'));
+    }
+
+    public function delete($look_id){
+        $clothing = Look::where('look_id', $look_id)->where('user_id', Auth::id());
+        $clothing->delete();
+
+        return redirect()->route('look.index')->with('success', 'look deletada com sucesso!');
     }
 }

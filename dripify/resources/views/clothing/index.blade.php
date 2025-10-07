@@ -1,48 +1,53 @@
-@extends('layouts.app')
+<x-header-footer>
 
-@section('content')
-<div class="container">
-    <h1>Minhas Roupas</h1>
+        <div class="container mt-5">
+            <h1 class="h3 mb-4 text-center">My Wardrobe</h1>
 
-    <div style="margin-top: 20px;">
-        <a href="{{ route('dashboard') }}">
-            <button type="button">← Voltar ao Início</button>
-        </a>
-    </div>
+            <!-- Back to Dashboard -->
+            <div class="mb-4 text-center">
+                <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">← Return to Home</a>
+            </div>
 
-    @if($clothes->isEmpty())
-        <p>Você ainda não cadastrou roupas.</p>
-    @else
-        <ul>
-            @foreach($clothes as $clothing)
-                <li>
-                    <strong>{{ $clothing->clothing_name }}</strong><br>
-                    <p>{{ $clothing->clothing_description }}</p>
-                    <img src="{{ asset('storage/' . $clothing->clothing_path) }}"
-                         alt="Imagem da roupa"
-                         style="max-width: 200px; height: auto;"><br>
+            @if($clothes->isEmpty())
+                <p class="text-center">No clothes have been added yet.</p>
+            @else
+                <div class="row g-4">
+                    @foreach($clothes as $clothing)
+                        <div class="col-md-4 mb-3">
+                            <div class="card shadow-sm h-100">
+                                <img src="{{ asset('storage/' . $clothing->clothing_path) }}"
+                                     class="card-img-top"
+                                     alt="huh"
+                                     style="max-height:250px;{{$clothing->available ? '' : 'filter: grayscale(1);'}}">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">{{ $clothing->clothing_name ?? 'huhh' }}</h5>
+                                    <p class="card-text">{{ $clothing->clothing_description ?? 'Something went terribly wrong, please report this to the developers.' }}</p>
 
-                    <!-- Botão para alternar disponibilidade -->
+                                    <div class="mt-auto d-flex justify-content-between">
+                                        <!-- Toggle Availability -->
+                                        <form action="{{ route('clothing.toggleAvailable', $clothing->id) }}" method="POST">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit" class="btn btn-sm {{ $clothing->available ? 'btn-success' : 'btn-warning' }}">
+                                                {{ $clothing->available ? 'Available' : 'Unavailable' }}
+                                            </button>
+                                        </form>
 
-                    <form action="{{ route('clothing.toggleAvailable', $clothing->id) }}" method="POST">
-                        @csrf
-                        @method('PATCH')
-                        <button type="submit">
-                            {{ $clothing->available ? 'Desativar' : 'Ativar' }}
-                        </button>
-                    </form>
+                                        <!-- Delete Clothing -->
+                                        <form action="{{ route('clothing.delete', $clothing->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+        </div>
 
-                    <form action="{{ route('clothing.delete', $clothing->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit">
-                            {'Deletar'}
-                        </button>
-                    </form>
 
-                </li>
-            @endforeach
-        </ul>
-    @endif
-</div>
-@endsection
+
+</x-header-footer>

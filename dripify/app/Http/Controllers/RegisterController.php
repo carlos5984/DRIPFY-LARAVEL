@@ -13,13 +13,12 @@ class RegisterController extends Controller
     {
         $userData = $request->validate([
             'name' => ['required', 'string'],
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-
+            'email' => ['required','unique:users', 'email'],
+            'password' => ['required','min:8','confirmed'],
         ]);
 
         $user = User::create($userData);
-        
+
         Auth::Login($user);
         return redirect()->route('dashboard');
     }

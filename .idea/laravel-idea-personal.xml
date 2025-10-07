@@ -4,6 +4,7 @@
     <option name="generationStringOptionValues">
       <map>
         <entry key="createController.singleAction" value="1" />
+        <entry key="createDatabaseMigration.create" value="" />
         <entry key="postGeneration:migration2" value="" />
       </map>
     </option>
