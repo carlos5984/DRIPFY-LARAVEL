@@ -90,4 +90,11 @@ class LookController extends Controller
         return view('looks/lookList', compact('looks'));
         //        return view('clothing.index', compact('clothes'));
     }
+
+    public function delete($look_id){
+        $clothing = Look::where('look_id', $look_id)->where('user_id', Auth::id());
+        $clothing->delete();
+
+        return redirect()->route('look.index')->with('success', 'look deletada com sucesso!');
+    }
 }

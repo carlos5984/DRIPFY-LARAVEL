@@ -8,14 +8,20 @@
             <p>Você ainda não gerou os looks.</p>
         @else
             <ul>
-                @foreach($looks as $look)
+                @foreach($looks as $lookid => $clothing_paths)
                     <li>
                         <p>look </p>
-                        @foreach($look as $clothing_path)
+                        @foreach($clothing_paths as $clothing_path)
                         <img src="{{ asset('storage/' . $clothing_path ) }}"
                              alt="Imagem da roupa"
                              style="max-width: 200px; height: auto;">
                         @endforeach
+
+                        <form action="{{ route('look.delete',$lookid) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">Deletar look</button>
+                        </form>
                     </li>
                 @endforeach
             </ul>

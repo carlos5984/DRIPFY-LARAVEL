@@ -47,7 +47,7 @@ Route::middleware('auth')->prefix('clothing')->group(function () {
 
     Route::get('/list', [ClothingController::class, 'index'])->name('clothing.index');
 
-    Route::patch('/clothing/{clothing}/toggle-available', [ClothingController::class, 'toggleAvailable'])
+    Route::patch('/{clothing}/toggle-available', [ClothingController::class, 'toggleAvailable'])
     ->name('clothing.toggleAvailable');
 
     Route::delete('/{id}', [ClothingController::class, 'destroy'])->name('clothing.delete'); 
@@ -59,5 +59,6 @@ Route::middleware('auth')->prefix('clothing')->group(function () {
 Route::prefix('look')->middleware('auth')->group(function () {
     Route::view('/add', 'looks/formAddLook')->name('look.formAddLook'); // Form add look
     Route::post('/add', [LookController::class, 'store'])->name('look.add'); // Submit look
-    Route::get('/list', [LookController::class,  'index'])->name('look.index'); // List looks
+    Route::get('/list', [LookController::class,  'index'])->name('look.index'); // List
+    Route::delete('/{look}/delete', [LookController::class, 'delete'])->name('look.delete');
 });
