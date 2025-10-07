@@ -125,7 +125,7 @@ def GenerateLooks(userid: str, user_prompt: str) -> str:
 
     Expected output example:
     ["uuid1","uuid2","uuid3"]
-
+    -each uuid must be surrounded by double quotes (single quotes crash the app)
     # USER INPUT
     user_clothing: {clothing}
     user_prompt: {user_prompt}

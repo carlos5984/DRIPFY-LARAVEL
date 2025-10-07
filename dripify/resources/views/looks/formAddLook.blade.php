@@ -1,43 +1,46 @@
-@extends('layouts.app')
+<x-header-footer>
 
-@section('content')
-<div class="container">
-    <h1>Gerar Look</h1>
+    <div class="container mt-5" style="max-width: 600px;">
+        <h1 class="h3 mb-4 text-center">Gerar Look</h1>
 
-    <!-- Mostrar mensagem de sucesso -->
-    @if(session('success'))
-        <div>{{ session('success') }}</div>
-    @endif
+        <!-- Success Message -->
+        @if(session('success'))
+            <div class="alert alert-success text-center">
+                {{ session('success') }}
+            </div>
+        @endif
 
-    <!-- Mostrar erros -->
-    @if ($errors->any())
-        <div>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+        <!-- Error Messages -->
+        @if(session('error'))
+            <div class="alert alert-danger text-center">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        <!-- Generate Look Form -->
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form action="{{ route('look.add') }}" method="POST">
+                    @csrf
+
+                    <div class="mb-3">
+                        <label for="lookPrompt" class="form-label">Look Prompt</label>
+                        <input type="text" name="lookPrompt" id="lookPrompt"
+                               class="form-control @error('lookPrompt') is-invalid @enderror"
+                               placeholder="Ex: Casual summer outfit"
+                               required>
+                        @error('lookPrompt')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">← Voltar ao Início</a>
+                        <button type="submit" class="btn btn-primary">Gerar Look!</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    @endif
-
-    <!-- Formulário -->
-    <form action="{{ route('look.add') }}" method="POST">
-        @csrf
-
-        <div>
-            <label for="lookPrompt">Look Prompt</label>
-            <input type="text" name="lookPrompt" id="lookPrompt" required>
-        </div>
-
-        <div>
-            <button type="submit">Gerar Look!</button>
-        </div>
-    </form>
-
-    <div style="margin-top: 10px;">
-        <a href="{{ route('dashboard') }}">
-            <button type="button">Voltar ao Início</button>
-        </a>
     </div>
-</div>
-@endsection
+
+</x-header-footer>

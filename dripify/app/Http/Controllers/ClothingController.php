@@ -27,6 +27,16 @@ class ClothingController extends Controller
 
         // Obter descrição da IA
         $response = $this->getDescriptionFromAI($path);
+        switch($response[0])
+        {
+            case "connection error":
+                return redirect()->route('look.formAddLook')->with('error', 'API currently unavailable, please try again later.');
+
+            case "api error":
+                return redirect()->route('look.formAddLook')->with('error', 'Something went wrong, please try again later.');
+            default:
+                break;
+        }
         $name = array_key_first($response);
         $description = $response[$name]['description'];
 
@@ -50,11 +60,11 @@ class ClothingController extends Controller
         try {
             $response = Http::get($url);
         } catch (ConnectionException $e) {
-            return "CONNECTION FAILED \n " . $e->getMessage();
+            return ["connection error", $e->getMessage()];
         }
 
         if (!$response->successful()) {
-            return 'DESCRIPTION NOT GENERATED';
+            return ["api error", $response->getStatusCode()];
         }
 
         $data = json_decode( $response->json() , true);
