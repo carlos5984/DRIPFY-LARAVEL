@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\User;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 
@@ -76,7 +77,8 @@ class ClothingController extends Controller
         public function index()
     {
         // Pegando só as roupas do usuário logado
-        $clothes = Clothing::where('user_id', Auth::id())->get();
+        $user = auth()->user();
+        $clothes = $user->clothes()->get();
 
         return view('clothing.index', compact('clothes'));
     }

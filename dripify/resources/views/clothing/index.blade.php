@@ -1,15 +1,15 @@
 <x-header-footer>
 
         <div class="container mt-5">
-            <h1 class="h3 mb-4 text-center">Minhas Roupas</h1>
+            <h1 class="h3 mb-4 text-center">My Wardrobe</h1>
 
             <!-- Back to Dashboard -->
             <div class="mb-4 text-center">
-                <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">← Voltar ao Início</a>
+                <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">← Return to Home</a>
             </div>
 
             @if($clothes->isEmpty())
-                <p class="text-center">Você ainda não cadastrou roupas.</p>
+                <p class="text-center">No clothes have been added yet.</p>
             @else
                 <div class="row g-4">
                     @foreach($clothes as $clothing)
@@ -17,11 +17,11 @@
                             <div class="card shadow-sm h-100">
                                 <img src="{{ asset('storage/' . $clothing->clothing_path) }}"
                                      class="card-img-top"
-                                     alt="Imagem da roupa"
+                                     alt="huh"
                                      style="max-height:250px;{{$clothing->available ? '' : 'filter: grayscale(1);'}}">
                                 <div class="card-body d-flex flex-column">
-                                    <h5 class="card-title">{{ $clothing->clothing_name ?? 'Sem Nome' }}</h5>
-                                    <p class="card-text">{{ $clothing->clothing_description ?? 'Sem descrição' }}</p>
+                                    <h5 class="card-title">{{ $clothing->clothing_name ?? 'huhh' }}</h5>
+                                    <p class="card-text">{{ $clothing->clothing_description ?? 'Something went terribly wrong, please report this to the developers.' }}</p>
 
                                     <div class="mt-auto d-flex justify-content-between">
                                         <!-- Toggle Availability -->
@@ -29,7 +29,7 @@
                                             @csrf
                                             @method('PATCH')
                                             <button type="submit" class="btn btn-sm {{ $clothing->available ? 'btn-success' : 'btn-warning' }}">
-                                                {{ $clothing->available ? 'Disponivel' : 'Indisponivel' }}
+                                                {{ $clothing->available ? 'Available' : 'Unavailable' }}
                                             </button>
                                         </form>
 
@@ -37,7 +37,7 @@
                                         <form action="{{ route('clothing.delete', $clothing->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger">Deletar</button>
+                                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                         </form>
                                     </div>
                                 </div>

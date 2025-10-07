@@ -1,7 +1,7 @@
 <x-header-footer>
 
     <div class="container mt-5" style="max-width: 600px;">
-        <h1 class="h3 mb-4 text-center">Gerar Look</h1>
+        <h1 class="h3 mb-4 text-center">Look Generation</h1>
 
         <!-- Success Message -->
         @if(session('success'))
@@ -35,8 +35,8 @@
                     </div>
 
                     <div class="d-flex justify-content-between">
-                        <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">← Voltar ao Início</a>
-                        <button type="submit" class="btn btn-primary">Gerar Look!</button>
+                        <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">← Return to Home</a>
+                        <button type="submit" class="btn btn-primary">Generate Look!</button>
                     </div>
                 </form>
             </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title ?? 'Minha Aplicação' }}</title>
+    <title>{{ 'DRIPIFY' }}</title>
 
     <!-- App CSS -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -22,10 +22,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
     <div class="container">
         <!-- Logo top-left -->
-        <a class="navbar-brand fw-bold fst-italic d-flex align-items-center" href="#">
+        <a class="navbar-brand fw-bold fst-italic d-flex align-items-center" href="{{ route('dashboard') }}">
             <span class="text-primary">DRIPI</span><span class="text-danger">FY</span>
         </a>
-
         <!-- Mobile toggle -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
@@ -53,7 +52,7 @@
 <!-- ===== FOOTER ===== -->
 <footer class="bg-dark text-light text-center py-3 mt-auto">
     <div class="container">
-        <small>&copy; {{ date('Y') }} DRIPIFY. All rights reserved.</small>
+        <small>&copy; {{ date('Y') }} DRIPIFY. Some rights reserved.</small>
     </div>
 </footer>
 

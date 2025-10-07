@@ -4,7 +4,7 @@
         <h1 class="h3 mb-4 text-center">Looks</h1>
 
         @if($looks->isEmpty())
-            <p class="text-center">Você ainda não gerou os looks.</p>
+            <p class="text-center">No looks have been generated yet</p>
         @else
             <div class="row g-4">
                 @foreach($looks as $lookid => $clothing_paths)
@@ -25,7 +25,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger w-100">
-                                        Deletar Look
+                                        Delete Look
                                     </button>
                                 </form>
                             </div>
@@ -35,8 +35,8 @@
             </div>
         @endif
 
-        <div class="mt-4 text-center">
-            <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">← Voltar ao Início</a>
+        <div class="mt-4 text-center mb-3">
+            <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">← Return to Home</a>
         </div>
     </div>
 
