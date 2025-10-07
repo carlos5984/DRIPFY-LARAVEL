@@ -4,6 +4,7 @@ from google.genai import types
 from PIL import Image
 import config 
 import io
+from io import BytesIO
 
 
 PROJECT_ID = config.PROJECT_ID
@@ -19,11 +20,11 @@ def DescribeImage(path: str, max_size: tuple = (512,512)) -> str:
     client = genai.Client(vertexai=True, project=PROJECT_ID, location=LOCATION)
     
     image = Image.open(path) 
-    image = image.convert("RGB")  # Ensure the image is in RGB format    
-    image.thumbnail(max_size)  # Resize the image while maintaining aspect ratio
+    image = image.convert("RGB") 
+    image.thumbnail(max_size) 
     buffer = io.BytesIO()
-    image.save(buffer, format="PNG")  # Save the image to a buffer in PNG format
-    image_content = buffer.getvalue()  # Get the byte content of the image
+    image.save(buffer, format="PNG") 
+    image_content = buffer.getvalue() 
         
     image_part = types.Part(
         inline_data=types.Blob(
@@ -157,3 +158,4 @@ def GenerateLooks(userid: str, user_prompt: str) -> str:
     
     print(response)
     return response if response else "ERROR : API RETURNED NONE"
+

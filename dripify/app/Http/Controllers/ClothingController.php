@@ -12,10 +12,7 @@ use Illuminate\Support\Str;
 class ClothingController extends Controller
 {
     // Mostra o formulário de criação
-    public function create()
-    {
-        return view('clothing.create'); // view: resources/views/clothing/create.blade.php
-    }
+
 
     // Salva a roupa no banco
     public function store(Request $request)

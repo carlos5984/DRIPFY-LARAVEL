@@ -20,9 +20,7 @@ Route::post('/login', LoginController::class)->name('login.attempt');
 
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth')->name('dashboard');
+Route::view('/dashboard','dashboard')->middleware('auth')->name('dashboard');
 
 Route::post('/logout', function(){
     Auth::guard('web')->logout();
@@ -42,7 +40,7 @@ Route::post('/register' , RegisterController::class)->name('register.store');
 // Prefixo opcional "clothing"
 Route::middleware('auth')->prefix('clothing')->group(function () {
     // Formulário para criar roupa
-    Route::get('/create', [ClothingController::class, 'create'])->name('clothing.create');
+    Route::view('/create', 'clothing/create')->name('clothing.create');
 
     // Rota para salvar roupa
     Route::post('/store', [ClothingController::class, 'store'])->name('clothing.store');
