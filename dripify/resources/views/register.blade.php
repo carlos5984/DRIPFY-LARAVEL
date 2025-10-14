@@ -1,7 +1,7 @@
 <x-layout>
 
     <h1 class="text-center mb-3 fst-italic fw-bold">
-        <span class="text-primary">DRIPI</span><span class="text-danger">FY</span>
+     web presenca
     </h1>
     <form method="post" action="{{ route('register.store') }}" class="card p-4 shadow-sm mx-auto" style="max-width: 400px;">
         @csrf
